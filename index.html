@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Todo · 任务清单</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="bgOverlay" class="bg-overlay"></div>
+<div class="app">
+
+  <!-- header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Todo</h1>
+      <div class="subtitle" id="stats">加载中…</div>
+    </div>
+    <div class="header-right">
+      <div class="progress-ring" id="progressRing" title="完成进度">
+        <svg width="56" height="56" viewBox="0 0 56 56">
+          <circle class="bg" cx="28" cy="28" r="22" />
+          <circle class="fg" id="progressArc" cx="28" cy="28" r="22" stroke-dasharray="138.23" stroke-dashoffset="138.23" />
+        </svg>
+        <div class="center" id="progressPct">0%</div>
+      </div>
+      <button class="gear-btn" id="gearBtn" title="自定义背景" aria-label="自定义背景">🎨</button>
+      <input type="file" id="bgFileInput" accept="image/*" hidden>
+    </div>
+  </div>
+
+  <!-- search -->
+  <div class="search-bar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="search" id="searchInput" placeholder="搜索任务…" autocomplete="off">
+    </div>
+  </div>
+
+  <!-- toolbar: filter + sort -->
+  <div class="toolbar">
+    <div class="seg-control" id="segFilters">
+      <button class="seg-btn active" data-filter="all">全部</button>
+      <button class="seg-btn" data-filter="active">未完成</button>
+      <button class="seg-btn" data-filter="done">已完成</button>
+    </div>
+    <button class="sort-btn" id="sortBtn" title="左键切换排序方式，右键切换升降序">优先级 <span class="arrow">▼</span></button>
+  </div>
+
+  <!-- add card -->
+  <div class="add-card">
+    <form class="add-form" id="form">
+      <div class="input-wrap">
+        <span class="plus">+</span>
+        <input type="text" id="taskInput" placeholder="添加一个任务…" autocomplete="off" autofocus>
+      </div>
+      <div class="prio-picker">
+        <button type="button" class="prio-dot-btn selected" data-prio="med" title="中优先级"></button>
+        <button type="button" class="prio-dot-btn" data-prio="low" title="低优先级"></button>
+        <button type="button" class="prio-dot-btn" data-prio="high" title="高优先级"></button>
+      </div>
+      <button class="add-btn" type="submit">添加</button>
+    </form>
+  </div>
+
+  <!-- list card -->
+  <div class="list-card">
+    <ul class="todo-list" id="list"></ul>
+    <div class="footer" id="footer">
+      <div class="counts">
+        <span>未完成 <span class="num" id="activeCount">0</span></span>
+        <span>已完成 <span class="num" id="doneCount">0</span></span>
+      </div>
+      <button class="clear-btn" id="clearDone">清除已完成</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- bg action sheet -->
+<div class="modal-overlay" id="bgSheet" style="display:none;">
+  <div class="modal-sheet actionsheet">
+    <div class="modal-title">背景图片</div>
+    <div id="bgPreviewWrap" style="display:none; text-align:center; margin-bottom:14px;">
+      <img id="bgPreview" style="width:100%; height:110px; border-radius:10px; object-fit:cover; border:1px solid var(--ios-light-separator);">
+    </div>
+    <div class="bg-setting">
+      <label class="bg-setting-label">显示方式</label>
+      <div class="bg-size-group" id="bgSizeGroup">
+        <button class="bg-size-btn active" data-size="cover">铺满</button>
+        <button class="bg-size-btn" data-size="contain">适应</button>
+        <button class="bg-size-btn" data-size="stretch">拉伸</button>
+        <button class="bg-size-btn" data-size="repeat">平铺</button>
+      </div>
+    </div>
+    <div class="bg-setting">
+      <label class="bg-setting-label">毛玻璃效果</label>
+      <label class="toggle-switch">
+        <input type="checkbox" id="bgBlurToggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="bg-setting">
+      <label class="bg-setting-label">UI 透明度</label>
+      <div class="alpha-slider-wrap">
+        <input type="range" class="alpha-slider" id="bgAlphaSlider" min="0" max="1" step="0.05" value="0.75">
+        <span class="alpha-value" id="bgAlphaValue">75%</span>
+      </div>
+    </div>
+
+    <div class="sheet-actions" style="margin-top:6px;">
+      <button class="sheet-btn" id="bgChooseBtn">📁 选择图片</button>
+      <button class="sheet-btn" id="bgRemoveBtn" style="color:var(--ios-red);">🗑 移除背景</button>
+      <button class="sheet-btn sheet-cancel" id="bgCancelBtn">取消</button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
+
+
+
